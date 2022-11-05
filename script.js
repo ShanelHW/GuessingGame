@@ -1,26 +1,55 @@
 let guessBtn = document.getElementById("guessBtn");
 let guess = document.getElementById("guess");
 let result = document.getElementById("result");
+let range= document.getElementById("range")
+let userGuess;
+let limit;
 
-let randomNum = Math.ceil(Math.random()*20);
-   console.log('A random number was generated.')
+
+let setLimit = () =>{
+    console.log(document.getElementById('limit').value)
+    limit = Math.ceil(Number(document.getElementById('limit').value))
+    let isOverOne = (limit >= 1)
+    let isNum = (!isNaN(limit))
+    if (isOverOne && isNum){
+        range.innerText= `Choose a number between 1 and ${Math.ceil(Number(document.getElementById('limit').value))}`
+    }else{
+        range.innerHTML= 'Choose a valid number.'
+    }
+}
+
+
+let randomNum = (limit) => {Math.ceil(Math.random()*limit);}
 
 const guessNum = () => {
-    let userGuess = Number(document.getElementById('guess').value);
-   
+    //set userGuess based on input
+   userGuess =  Number(document.getElementById('guess').value);
+   //check for safeNumber
+    if(!typeof userGuess == 'Number') {
+        result.innerHTML = 'That is not a number!'
+    }else if (userGuess > limit || !userGuess > 1) {
+        result.innerHTML = 'That number is not in range, try again.'
+    } else{
+//Once safe compare userGuess with randomNum
     if(userGuess == randomNum){
         result.innerHTML= 'You got it!'
     }
     else if (userGuess < randomNum) {
         result.innerHTML= 'No, try a higher number'
-    } else {
+    } else if(userGuess > randomNum) {
         result.innerHTML= 'No, try a lower number'
     }
-    console.log(`Guess: ${userGuess}`);
-    console.log(randomNum);
-    console.log(guess == randomNum)
+
+}    
 }
 
 guessBtn.addEventListener("click", () => {
+    
+    setLimit()
+    console.log(`Limit: ${limit}`)
+    randomNum(limit)
+    console.log(`Random Number: ${randomNum}`)
     guessNum();
+    console.log(`Guess: ${userGuess}`)
+
 });
