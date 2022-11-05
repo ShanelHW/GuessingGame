@@ -4,6 +4,9 @@ let result = document.getElementById("result");
 let range= document.getElementById("range")
 let userGuess;
 let limit;
+let randomNum;
+let guesses = document.getElementById('guesses');
+let guessArray = [];
 
 
 let setLimit = () =>{
@@ -16,10 +19,10 @@ let setLimit = () =>{
     }else{
         range.innerHTML= 'Choose a valid number.'
     }
+    randomNum = Math.ceil(Math.random()*limit);
 }
 
 
-let randomNum = (limit) => {Math.ceil(Math.random()*limit);}
 
 const guessNum = () => {
     //set userGuess based on input
@@ -30,6 +33,9 @@ const guessNum = () => {
     }else if (userGuess > limit || !userGuess > 1) {
         result.innerHTML = 'That number is not in range, try again.'
     } else{
+        //add to array
+        guessArray.push(userGuess);
+        guesses.innerText = guessArray;
 //Once safe compare userGuess with randomNum
     if(userGuess == randomNum){
         result.innerHTML= 'You got it!'
@@ -47,7 +53,6 @@ guessBtn.addEventListener("click", () => {
     
     setLimit()
     console.log(`Limit: ${limit}`)
-    randomNum(limit)
     console.log(`Random Number: ${randomNum}`)
     guessNum();
     console.log(`Guess: ${userGuess}`)
