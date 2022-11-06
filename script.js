@@ -1,8 +1,10 @@
 let guessBtn = document.getElementById("guessBtn");
+let resetBtn = document.getElementById("resetBtn")
 let guess = document.getElementById("guess");
 let result = document.getElementById("result");
 let instructions = document.getElementById("instructions");
 let instructions2 = document.getElementById("instructions2");
+let maxField = document.getElementById('maxField');
 let userGuess;
 let max;
 let randomNum;
@@ -56,26 +58,34 @@ const guessNum = () => {
       ? guessArray.push(userGuess)
       : instructions2.innerHTML = 'You already guessed this number';
   }
-  guesses.innerHTML = guessArray;
 };
 //Once safe compare userGuess with randomNum
 
 const compareGuesses = () => {
         if (userGuess == randomNum) {
-        result.innerHTML = `You got it! It only took ${guessArray.length} tries`;
+        result.innerHTML = `You got it! It only took ${guessArray.length} tries. Your guesses were ${guessArray}`;
       } else if (userGuess < randomNum) {
         result.innerHTML = "No, try a higher number";
       } else if (userGuess > randomNum) {
         result.innerHTML = "No, try a lower number";
       }
 }
-
+maxField.addEventListener('focusout', ()=>{
+    setMax()
+})
 
 guessBtn.addEventListener("click", () => {
-  setMax();
-  console.log(`Maximum: ${max}`);
+//   setMax();
+//   console.log(`Maximum: ${max}`);
+maxLabel.hidden = 'true';
+maxField.hidden = 'true';
   getRandom();
   guessNum();
   console.log(`Guess: ${userGuess}`);
   compareGuesses();
 });
+
+
+resetBtn.addEventListener("click", ()=>{
+    window.location.reload()
+})
