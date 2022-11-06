@@ -44,9 +44,10 @@ const guessNum = () => {
   //set userGuess based on input
   userGuess = Math.ceil(Number(document.getElementById("guessField").value));
   //check for safeNumber
+  let inRange = userGuess >=1 && userGuess <= max
   if (!typeof userGuess == "Number") {
     result.innerHTML = "That is not a number!";
-  } else if (userGuess > max || userGuess < 1) {
+  } else if (!inRange) {
     instructions2.innerHTML = "That number is not in range, try again.";
   } 
   else {
@@ -60,18 +61,15 @@ const guessNum = () => {
 //Once safe compare userGuess with randomNum
 
 const compareGuesses = () => {
-if(inRange){
-    if (userGuess == randomNum) {
+        if (userGuess == randomNum) {
         result.innerHTML = `You got it! It only took ${guessArray.length} tries`;
       } else if (userGuess < randomNum) {
         result.innerHTML = "No, try a higher number";
       } else if (userGuess > randomNum) {
         result.innerHTML = "No, try a lower number";
       }
-} else{
-    
 }
-};
+
 
 guessBtn.addEventListener("click", () => {
   setMax();
